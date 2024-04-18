@@ -1,5 +1,9 @@
 # LUADNSUPD
 
+![](https://woodpeckerci.moonlit-room.org/api/badges/3/status.svg)
+
+## What is it
+
 Luadnsups is a small dyndns-like utility to update a luadns A record regularly so it points to the public ip address of the host running this container.
 
 To work, the container needs to have 4 env variables set
