@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -o pipefail
+
 LUADNS_API_URL="https://api.luadns.com/v1"
 PUBIP_URL="https://ipinfo.io/ip"
 
