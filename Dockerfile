@@ -1,4 +1,4 @@
-FROM docker.io/library/alpine:3.21.1
+FROM docker.io/library/alpine:3.21.2
 
 RUN adduser -D -u "1000" "runner"
 RUN mkdir -p "/run/user/1000"
