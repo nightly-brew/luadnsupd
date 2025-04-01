@@ -68,6 +68,11 @@ luadns_set_record_ip() {
   fi
 }
 
+# Example: luadnsupd_get_record_ip "RECORD_JSON_DATA"
+luadns_get_record_ip() {
+  echo "$1" | jq -r '.content'
+}
+
 get_public_ip() {
   curl -sS "$PUBIP_URL"
 
@@ -76,9 +81,18 @@ get_public_ip() {
   fi
 }
 
-precheck
-record="$(luadns_get_record "$LUADNS_ZONE_ID" "$LUADNS_RECORD_NAME")"
-public_ip="$(get_public_ip)"
-luadns_set_record_ip "$record" "$public_ip"
 
-echo "$(date "+%Y-%m-%d %H:%M:%S") | Successfully updated the A record to point $public_ip"
+precheck
+
+record="$(luadns_get_record "$LUADNS_ZONE_ID" "$LUADNS_RECORD_NAME")"
+record_ip="$(luadns_get_record_ip "$record")"
+public_ip="$(get_public_ip)"
+
+if [ "$record_ip" != "$public_ip" ]; then
+  luadns_set_record_ip "$record" "$public_ip"
+  echo "$(date "+%Y-%m-%d %H:%M:%S") | Successfully updated the A record to point $public_ip"
+else
+  echo "$(date "+%Y-%m-%d %H:%M:%S") | $LUADNS_RECORD_NAME points to $record_ip"
+  echo "$(date "+%Y-%m-%d %H:%M:%S") | Current public ip is $public_ip"
+  echo "$(date "+%Y-%m-%d %H:%M:%S") | Record is up to date"
+fi
