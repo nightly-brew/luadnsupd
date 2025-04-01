@@ -90,7 +90,7 @@ public_ip="$(get_public_ip)"
 
 if [ "$record_ip" != "$public_ip" ]; then
   luadns_set_record_ip "$record" "$public_ip"
-  echo "$(date "+%Y-%m-%d %H:%M:%S") | Successfully updated the A record to point $public_ip"
+  echo "$(date "+%Y-%m-%d %H:%M:%S") | Successfully updated $LUADNS_RECORD_NAME to point $public_ip"
 else
   echo "$(date "+%Y-%m-%d %H:%M:%S") | $LUADNS_RECORD_NAME points to $record_ip"
   echo "$(date "+%Y-%m-%d %H:%M:%S") | Current public ip is $public_ip"
